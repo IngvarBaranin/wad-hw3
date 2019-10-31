@@ -62,7 +62,7 @@
                         <br>
                         <div>
                             <button @click="addActive = !addActive" id="add-course-button" class="blue-button">+</button>
-                            <component v-if="addActive" v-bind:is="component"></component>
+                            <component v-if="addActive" v-bind:is="component" @cancelled = cancelled></component>
                         </div>
                     </div>
                 </div>
@@ -80,6 +80,12 @@ import AddCourse from './AddCourse.vue'
 export default {
     
     el: "#container",
+
+    methods: {
+        cancelled(){
+            this.addActive = false;
+        }
+    },
 
     props: {
         activeTab: {
