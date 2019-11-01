@@ -3,7 +3,7 @@
         <header>
             <strong>Welcome to your dashboard!</strong>
         </header>
-        <Container />
+        <Container v-bind:user=user @addCourse = addCourse />
         <footer>
             <ul class="links">
                 <li>
@@ -19,11 +19,29 @@
 
 <script>
     import Container from './components/Container'
+    import User from './models/User'
+    import Course from './models/Course'
+
+    // eslint-disable-next-line no-unused-vars
+    let user = new User("Ingbeka","Barenan","03/12/1998","Software Engineering",2.5);
+    user.courses.push(new Course("Learning node.js", 2, 89));
 
     export default {
         name: 'app',
         components: {
             Container
+        },
+        data() {
+            return {
+                user: user
+            }
+        },
+        methods: {
+            addCourse(course) {
+                user.courses.push(course);
+                // eslint-disable-next-line no-console
+                console.log(user)
+            }
         }
     }
 </script>

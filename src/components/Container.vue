@@ -3,25 +3,10 @@
             <section id="main">
                 <div class="content">
                     <div :class="{'active': activeTab == 1}" @click="activeTab = 1" id="profile-container" class="tab">
-                        <div id="profile">
-                            <div class="avatar">
-                                <img src="../assets/me.png" id="picture" alt="My picture">
-                            </div>
-                            <div class="info">
-                                <ul>
-                                    <li id="name">John Doe</li>
-                                    <li id="birthdate">11/10/1990</li>
-                                    <li id="faculty">Software Engineering</li>
-                                </ul>
-                            </div>
-                            <div id="gpa">
-                                <strong>2.75</strong>
-                            </div>
-                            <div class="clear-fix"></div>
-                        </div>
+                        <profile></profile>
                     </div>
                     <div :class="{'active': activeTab == 2}" @click="activeTab = 2" id="courses-container" class="tab">
-                        <h1 class="title">Courses</h1>
+                        <h1 class="title">{{user.firstname}}</h1>
                         <table id="courses">
                             <thead>
                             <tr>
@@ -32,29 +17,11 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Agile software development</td>
-                                <td>1</td>
-                                <td>82</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>System modeling</td>
-                                <td>1</td>
-                                <td>85</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Object-oriented programming</td>
-                                <td>2</td>
-                                <td>99</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Estonian language Level A2</td>
-                                <td>2</td>
-                                <td>65</td>
+                            <tr v-for="(course, index) in user.courses" v-bind:key="index">
+                                <td>{{index+1}}</td>
+                                <td>{{course.title}}</td>
+                                <td>{{course.semester}}</td>
+                                <td>{{course.grade}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -62,7 +29,7 @@
                         <br>
                         <div>
                             <button @click="addActive = !addActive" id="add-course-button" class="blue-button">+</button>
-                            <component v-if="addActive" v-bind:is="component" @cancelled = cancelled></component>
+                            <component v-if="addActive" v-bind:is="component" @cancelled = cancelled @addCourse = addCourse></component>
                         </div>
                     </div>
                 </div>
@@ -76,6 +43,8 @@
 
 <script>
 import AddCourse from './AddCourse.vue'
+import Profile from "./Profile"
+import User from "../models/User";
 
 export default {
     
@@ -84,28 +53,29 @@ export default {
     methods: {
         cancelled(){
             this.addActive = false;
+        },
+
+        addCourse(course) {
+            this.$emit("addCourse",course)
         }
     },
 
     props: {
-        activeTab: {
-            type: Number,
-            default: 1
-        },
-
-        addActive: {
-            type: Boolean,
-            default: false
+        user: {
+            type: User
         }
     },
     
     components: {
+        Profile,
         'add-course': AddCourse
     },
 
-    data() {
+    data: function () {
         return {
-            component: 'add-course'
+            component: 'add-course',
+            activeTab: 1,
+            addActive: false
         }
     }
 }
