@@ -25,6 +25,7 @@
     // eslint-disable-next-line no-unused-vars
     let user = new User("Ingbeka","Barenan","03/12/1998","Software Engineering",2.5);
     user.courses.push(new Course("Learning node.js", 2, 89));
+    user.setgpa();
 
     export default {
         name: 'app',
@@ -39,8 +40,7 @@
         methods: {
             addCourse(course) {
                 user.courses.push(course);
-                // eslint-disable-next-line no-console
-                console.log(user)
+                user.setgpa();
             }
         }
     }

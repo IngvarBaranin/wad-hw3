@@ -3,7 +3,7 @@
             <section id="main">
                 <div class="content">
                     <div :class="{'active': activeTab == 1}" @click="activeTab = 1" id="profile-container" class="tab">
-                        <profile></profile>
+                        <profile v-bind:user=user></profile>
                     </div>
                     <div :class="{'active': activeTab == 2}" @click="activeTab = 2" id="courses-container" class="tab">
                         <h1 class="title">{{user.firstname}}</h1>
