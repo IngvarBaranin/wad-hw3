@@ -31,6 +31,6 @@ export default class User {
                     break;
             }
         }
-        this.gpa = points / this.courses.length;
+        this.gpa = Math.round((points / this.courses.length)*100)/100;
     }
 }
