@@ -17,12 +17,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="(course, index) in user.courses" v-bind:key="index">
-                                <td>{{index+1}}</td>
-                                <td>{{course.title}}</td>
-                                <td>{{course.semester}}</td>
-                                <td>{{course.grade}}</td>
-                            </tr>
+                            <TableEntry v-for="(course, index) in user.courses" v-bind:key="index" v-bind:course="course" v-bind:index="index"></TableEntry>
                             </tbody>
                         </table>
                         <br>
@@ -45,6 +40,7 @@
 import AddCourse from './AddCourse.vue'
 import Profile from "./Profile"
 import User from "../models/User";
+import TableEntry from "./TableEntry";
 
 export default {
     
@@ -67,6 +63,7 @@ export default {
     },
     
     components: {
+        TableEntry,
         Profile,
         'add-course': AddCourse
     },
